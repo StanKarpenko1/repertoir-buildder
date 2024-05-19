@@ -2,39 +2,62 @@
 export const typeDefs = `#graphql
 
     enum Style {
-        Jazz
-        Pop
-        Latin
-        Evergreen
-        Flamenco
+        jazz
+        pop
+        latin
+        evergreen
+        flamenco
     }
 
     enum Mood {
-        Romantic
-        Upbeat
+        romantic
+        upbeat
     }
 
     enum Event {
-        Wedding
-        Cocktail Hour
-        Ceremony
-        Bar
-        
+        wedding
+        cocktail_hour
+        ceremony
+        bar  
+    }
+
+    enum Performance {
+        solo
+        backing_track
+        looper_ready
+        looper
+    }
+
+    enum Progress {
+        ready
+        not_ready
+        needs_practice
     }
 
     type Song {
         id: ID!,
         name: String!,
-        style: [Style!]!
+        style: [Style!]
         mood: [Mood!]
         event: [Event!]
+        performance: [Performance!]
+        progress: Progress
+        notes: String
     }
 
+    
     type Query {
-        songs: [Song],
-        songByStyle(style: Style!): [Song]
-        songByMood(mood: Mood!): [Song]
-        songByEvent(event: Event!): [Song]
-        songFilter (style: Style, mood: Mood, event: Event): [Song]
+        songs: [Song]
+        songFilter (
+
+            name: String
+            style: Style
+            mood: Mood
+            event: Event
+            performance: Performance
+            progress: Progress
+            
+
+             ): [Song]
     }
 `

@@ -12,26 +12,24 @@
             songs() {
                 return db.songs
             } ,
-            songByStyle(_, args) {
-                return db.songs.filter(song => song.style.includes(args.style))
-            },
-            songByMood(_, args) {
-                return db.songs.filter(song => song.mood.includes(args.mood))
-            },
-            songByEvent(_, args) {
-                return db.songs.filter(song => song.event.includes(args.event))
-            },
             songFilter(_, args){
                 return db.songs.filter(song => {
+
                     let matches = true
                     if(args.style){
-                        mathes = matches && song.style.includes(args.style)
+                        matches = matches && song.style.includes(args.style)
                     }
                     if (args.mood){
                         matches = matches && song.mood.includes(args.mood)
                     }
                     if (args.event){
                         matches = matches && song.event.includes(args.event)
+                    }
+                    if (args.performance){
+                        matches = matches && song.includes(args.performance)
+                    }
+                    if (args.progress){
+                        matches = matches && song.progress === args.progress
                     }
                     return matches
                 })
