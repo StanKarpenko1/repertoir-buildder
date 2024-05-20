@@ -55,7 +55,7 @@ let songs = [
         style: ['jazz'], 
         mood: ['upbeat'],
         event: ['cocktail_hour', 'bar'],
-        performance: 'solo',
+        performance: ['solo'],
         progress: 'ready', 
         notes: null
       },
@@ -65,7 +65,7 @@ let songs = [
         style: ['jazz'], 
         mood: ['romantic'],
         event: ['wedding', 'cocktail_hour', 'bar'],
-        performance: 'solo',
+        performance: ['solo'],
         progress: 'ready', 
         notes: null
       },
@@ -75,7 +75,7 @@ let songs = [
         style: ['jazz'], 
         mood: ['romantic'],
         event: ['wedding', 'cocktail_hour'],
-        performance: 'solo',
+        performance: ['solo'],
         progress: 'ready', 
         notes: null
       },
@@ -85,7 +85,7 @@ let songs = [
         style: ['jazz'], 
         mood: ['romantic'],
         event: ['wedding', 'cocktail_hour'],
-        performance: 'solo',
+        performance: ['solo'],
         progress: 'ready', 
         notes: null
       }

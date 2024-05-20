@@ -26,7 +26,7 @@
                         matches = matches && song.event.includes(args.event)
                     }
                     if (args.performance){
-                        matches = matches && song.includes(args.performance)
+                        matches = matches && song.performance.includes(args.performance)
                     }
                     if (args.progress){
                         matches = matches && song.progress === args.progress
