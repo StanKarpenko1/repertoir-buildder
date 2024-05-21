@@ -203,15 +203,19 @@ describe('GraphQL Query: getSongs', () => {
     });
   })
 
-  context('Query songFilter with multiple arguments', () => {
+  context.only('Query songFilter with multiple arguments', () => {
     const testCases = [
       { mood: 'romantic', event: 'wedding' },
       { style: 'jazz', performance: 'solo' },
       { mood: 'upbeat', progress: 'ready' },
       { mood: 'romantic', event: 'wedding',  performance: 'solo'},
       { mood: 'upbeat', event: 'wedding',  performance: 'solo'},
-      // Add more combinations as needed
-    ];
+      { mood: 'upbeat', event: 'wedding',  performance: 'solo', progress: 'ready' },
+      { mood: 'romantic', event: 'wedding',  performance: null, progress: null },
+      { mood: 'romantic', event: 'wedding',  performance: null, progress: null },
+      { mood: null, event: 'wedding',  performance: null, progress: null , style: null},
+
+       ];
     Cypress._.each(testCases, (testCase) => {
       it(`should fetch songs filtered by ${Object.keys(testCase).join(' and ')}`, () => {
         const query = `
