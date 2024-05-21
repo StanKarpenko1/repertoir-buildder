@@ -48,7 +48,10 @@ export const typeDefs = `#graphql
     
     type Query {
         songs: [Song]
-        songFilter (
+
+        getSongInfo (name: String): Song
+
+        songFilter (    
 
             name: String
             style: Style
@@ -60,4 +63,23 @@ export const typeDefs = `#graphql
 
              ): [Song]
     }
+
+    type Mutation {
+        addSong (song: AddSongInput) : Song
+        deleteSong (id: ID!) : [Song]
+    }
+
+    input AddSongInput {
+
+        name: String!
+        style: Style
+        mood: Mood
+        event: Event
+        performance: Performance
+        progress: Progress
+        notes: String
+
+    }
+
+      
 `

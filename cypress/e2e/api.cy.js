@@ -203,7 +203,7 @@ describe('GraphQL Query: getSongs', () => {
     });
   })
 
-  context.only('Query songFilter with multiple arguments', () => {
+  context('Query songFilter with multiple arguments', () => {
     const testCases = [
       { mood: 'romantic', event: 'wedding' },
       { style: 'jazz', performance: 'solo' },
@@ -246,6 +246,116 @@ describe('GraphQL Query: getSongs', () => {
         });
       });
     });
+  })
+
+  context ('getSongInfo Query', () => {
+    it('should fetch the song by name (all lowercase)', () => {
+     //#region variables
+      const query = `
+      query getSongInfo($name: String!) {
+        getSongInfo(name: $name) {
+          id
+          name
+          style
+          mood
+          event
+          performance
+          progress
+          notes
+        }
+      }
+    `;
+
+    const thisVariables = {name: 'misty'}
+
+    //#endregion variables
+
+    cy.request({
+      method: post,
+      url: '/',
+      body: {
+        query,
+        variables: thisVariables
+      },
+    }).then((res) => {
+      const song = res.body.data.getSongInfo;
+      expect(res.status).to.eq(200);
+      expect(song).to.have.property('id', '8');
+      expect(song).to.have.property('name', 'Misty');
+      expect(song).to.have.property('style').that.includes('jazz');
+      expect(song).to.have.property('mood').that.includes('romantic');
+      expect(song).to.have.property('event').that.includes('wedding').and.includes('cocktail_hour');
+      expect(song).to.have.property('performance').that.includes('solo');
+      expect(song).to.have.property('progress', 'ready');
+      expect(song).to.have.property('notes', null);
+    })
+
+    })
+    it('should fetch the song by name (with uppercase)', () => {
+      //#region variables
+       const query = `
+       query getSongInfo($name: String!) {
+         getSongInfo(name: $name) {
+           id
+           name
+           style
+           mood
+           event
+           performance
+           progress
+           notes
+         }
+       }
+     `;
+ 
+     const thisVariables = {name: 'Misty'}
+ 
+     //#endregion variables
+ 
+     cy.request({
+       method: post,
+       url: '/',
+       body: {
+         query,
+         variables: thisVariables
+       },
+     }).then((res) => {
+       const song = res.body.data.getSongInfo;
+       expect(res.status).to.eq(200);
+       expect(song).to.have.property('id', '8');
+       expect(song).to.have.property('name', 'Misty');
+       expect(song).to.have.property('style').that.includes('jazz');
+       expect(song).to.have.property('mood').that.includes('romantic');
+       expect(song).to.have.property('event').that.includes('wedding').and.includes('cocktail_hour');
+       expect(song).to.have.property('performance').that.includes('solo');
+       expect(song).to.have.property('progress', 'ready');
+       expect(song).to.have.property('notes', null);
+     })
+ 
+    })
+    it('should return null for a non-existent song', () => {
+      const query = `
+        query getSongInfo($name: String!) {
+          getSongInfo(name: $name) {
+            id
+            name
+          }
+        }
+      `;
+  
+      cy.request({
+        method: post,
+        url: '/graphql',
+        body: {
+          query,
+          variables: { name: 'Not a song' },
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data.getSongInfo).to.be.null;
+      });
+    });
+
   })
 
 

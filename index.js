@@ -9,9 +9,21 @@
  
     const resolvers = { 
         Query: {
+            // retrieve all songs
             songs() {
                 return db.songs
             } ,
+
+            // get the info about specific song
+            getSongInfo(_, args) {
+                const song =  db.songs.find(song => song.name.toLowerCase() === args.name.toLowerCase())
+                if (!song){
+                    return null
+                }
+                return song 
+            },
+
+            // get the list by parameters
             songFilter(_, args){
                 return db.songs.filter(song => {
 
@@ -33,6 +45,21 @@
                     }
                     return matches
                 })
+            }
+        },
+        Mutation: {
+            deleteSong (_, args) {
+                db.songs = db.songs.filter((s) => s.id !== parseInt(args.id, 10));
+                return db.songs
+            },
+            addSong (_, args) {
+                let newSong = {
+                    ...args.song,
+                    id: Math.floor(Math.random() * 10000)
+                }
+                db.songs.push(song)
+
+                return song
 
             }
         }
