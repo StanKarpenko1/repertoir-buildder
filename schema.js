@@ -1,4 +1,3 @@
-
 export const typeDefs = `#graphql
 
     enum Style {
@@ -45,32 +44,27 @@ export const typeDefs = `#graphql
         notes: String
     }
 
-    
     type Query {
         songs: [Song]
 
-        getSongInfo (name: String): Song
+        getSongInfo(name: String): Song
 
-        songFilter (    
-
-            name: String
-            style: Style
-            mood: Mood
-            event: Event
-            performance: Performance
-            progress: Progress
-            
-
-             ): [Song]
+        songFilter(
+            name: [String!]
+            style: [Style!]
+            mood: [Mood!]
+            event: [Event!]
+            performance: [Performance!]
+            progress: [Progress!]
+        ): [Song]
     }
 
     type Mutation {
-        addSong (song: AddSongInput) : Song
-        deleteSong (id: ID!) : [Song]
+        addSong(song: AddSongInput): Song
+        deleteSong(id: ID!): [Song]
     }
 
     input AddSongInput {
-
         name: String!
         style: Style
         mood: Mood
@@ -78,8 +72,5 @@ export const typeDefs = `#graphql
         performance: Performance
         progress: Progress
         notes: String
-
     }
-
-      
 `
