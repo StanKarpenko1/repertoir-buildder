@@ -62,14 +62,24 @@ export const typeDefs = `#graphql
     type Mutation {
         addSong(song: AddSongInput): Song
         deleteSong(id: ID!): [Song]
+        updateSong (id: ID!, edits: EditSongInput!): Song
     }
 
     input AddSongInput {
         name: String!
-        style: Style
-        mood: Mood
-        event: Event
-        performance: Performance
+        style: [Style!]
+        mood: [Mood!]
+        event: [Event!]
+        performance: [Performance!]
+        progress: Progress
+        notes: String
+    }
+    input EditSongInput {
+        name: String
+        style: [Style]
+        mood: [Mood]
+        event: [Event]
+        performance: [Performance]
         progress: Progress
         notes: String
     }

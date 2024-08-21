@@ -55,6 +55,12 @@ const resolvers = {
             return db.songs;
         },
         addSong(_, args) {
+            const existingSong = db.songs.find((s) => s.name.toLowerCase().trim() === args.song.name.toLowerCase().trim())
+            
+            if (existingSong) {
+                throw new Error (`A song with this name already exist.`)
+            }
+
             let newSong = {
                 ...args.song,
                 id: Math.floor(Math.random() * 10000)
@@ -62,6 +68,15 @@ const resolvers = {
             db.songs.push(newSong);
 
             return newSong;
+        },
+        updateSong(_, args) {
+            db.songs = db.songs.map((s) => {
+                if (s.id === parseInt(args.id, 10)){
+                    return {...s, ...args.edits}
+                }
+                return s
+            })
+            return db.songs.find((s) => s.id === parseInt(args.id, 10)) 
         }
     }
 };
